@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import ProductCard from '../Components/ProductCard';
+import { HashLoader } from 'react-spinners';
 
 const Home = () => {
 
@@ -10,16 +11,26 @@ const Home = () => {
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
+
+  const [loading, setLoading] = useState(false);
+
+  
   const productsPerPage = 8;
 
   // Fetch all products and categories
   useEffect(() => {
+    setLoading(true);
     axios.get('https://fakestoreapi.com/products')
       .then(res => {
         setProducts(res.data);
         setAllProducts(res.data);
+        setLoading(false);
       })
-      .catch(err => console.error(err));
+      .catch(err => {
+        console.error(err);
+
+        setLoading(false);
+      });
 
     axios.get('https://fakestoreapi.com/products/categories')
       .then(res => setCategories(res.data))
@@ -59,13 +70,6 @@ const Home = () => {
 
 
 
-
-
-
-
-
-
-
   return (
     <div className="bg-green-100 min-h-screen p-6">
      <div className="mb-6 flex flex-col sm:flex-row sm:justify-end sm:items-center gap-4">
@@ -88,11 +92,22 @@ const Home = () => {
 </div>
 
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {currentProducts.map(product => (
           <ProductCard product={product} key={product.id} />
         ))}
       </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+  {loading ? (
+    <div className="col-span-full flex justify-center items-center h-full w-full py-20">
+      <HashLoader color="#22c55e" />
+    </div>
+  ) : (
+    currentProducts.map(product => (
+      <ProductCard product={product} key={product.id} />
+    ))
+  )}
+</div>
 
       <div className="flex justify-center items-center gap-4 mt-8">
         <button
