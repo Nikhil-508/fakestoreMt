@@ -80,7 +80,7 @@ const Home = () => {
     id="category"
     value={selectedCategory}
     onChange={(e) => setSelectedCategory(e.target.value)}
-    className="w-44 sm:w-52 p-2 border rounded bg-white text-sm focus:outline-none transition duration-200"
+    className="w-44 sm:w-52 p-2 cursor-pointer border rounded bg-white text-sm focus:outline-none transition duration-200"
   >
     <option value="all">All Categories</option>
     {categories.map((cat) => (
