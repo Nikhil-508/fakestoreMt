@@ -91,12 +91,6 @@ const Home = () => {
   </select>
 </div>
 
-
-<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {currentProducts.map(product => (
-          <ProductCard product={product} key={product.id} />
-        ))}
-      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
   {loading ? (
     <div className="col-span-full flex justify-center items-center h-full w-full py-20">
